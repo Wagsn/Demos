@@ -49,7 +49,7 @@ namespace AssemblyExecuteAndUnloadDemo
             entryPoint = new TestInfo(a.EntryPoint);
             testEntryPoint = a.EntryPoint;
 
-            int result = (int)a.EntryPoint.Invoke(null, args);
+            int result = (int)a.EntryPoint.Invoke(entryPoint, args);
             alc.Unload();
 
             return result;
@@ -59,7 +59,7 @@ namespace AssemblyExecuteAndUnloadDemo
             WeakReference testAlcWeakRef;
             // Issue preventing unloading #2 - we keep MethodInfo of a method for an assembly loaded into the TestAssemblyLoadContext in a local variable
             MethodInfo testEntryPoint;
-            int result = ExecuteAndUnload(@"absolute/path/to/test.dll", out testAlcWeakRef, out testEntryPoint);
+            int result = ExecuteAndUnload(@"F:\Workspace\DotNet\Demos\src\AssemblyExecuteAndUnloadDemo\TestAssemblyLoadContextDemo\bin\Debug\netcoreapp3.0\TestAssemblyLoadContextDemo.dll", out testAlcWeakRef, out testEntryPoint);
 
             for (int i = 0; testAlcWeakRef.IsAlive && (i < 10); i++)
             {
@@ -69,6 +69,7 @@ namespace AssemblyExecuteAndUnloadDemo
 
             System.Diagnostics.Debugger.Break();
 
+            // Test completed, result=1, entryPoint: Int32 Main(System.String[]) unload success: False
             Console.WriteLine($"Test completed, result={result}, entryPoint: {testEntryPoint} unload success: {!testAlcWeakRef.IsAlive}");
         }
     }
