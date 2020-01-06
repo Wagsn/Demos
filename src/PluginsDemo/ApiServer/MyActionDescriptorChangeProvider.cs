@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ApiServerFor30
+namespace ApiServer
 {
     /// <summary>
     /// 触发控制器重新装载

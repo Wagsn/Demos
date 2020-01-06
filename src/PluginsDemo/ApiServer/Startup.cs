@@ -11,7 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using Microsoft.Extensions.Logging;
 
-namespace ApiServerFor30
+namespace ApiServer
 {
     public class Startup
     {

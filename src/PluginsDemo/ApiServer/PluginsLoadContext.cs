@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ApiServerFor30
+namespace ApiServer
 {
     /// <summary>
     /// 总插件加载上下文，用来统一管理每一个单独的插件加载上下文
