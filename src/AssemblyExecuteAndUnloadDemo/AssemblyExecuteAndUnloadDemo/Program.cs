@@ -61,6 +61,7 @@ namespace AssemblyExecuteAndUnloadDemo
             MethodInfo testEntryPoint;
             int result = ExecuteAndUnload(@"F:\Workspace\DotNet\Demos\src\AssemblyExecuteAndUnloadDemo\TestAssemblyLoadContextDemo\bin\Debug\netcoreapp3.0\TestAssemblyLoadContextDemo.dll", out testAlcWeakRef, out testEntryPoint);
 
+            // 这里不管怎么GC还是一直被占用着 TODO 只能采用文件流的方式加载`var fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open)`还需要自定义`MyAssemblyPart`
             for (int i = 0; testAlcWeakRef.IsAlive && (i < 10); i++)
             {
                 GC.Collect();
