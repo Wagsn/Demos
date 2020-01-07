@@ -1,5 +1,7 @@
 # Plugins Demo
 
+插件实现机制 ApplicationPartManager+IActionDescriptorChangeProvider+AssemblyLoadContext+接口约束
+
 参考
 - https://blog.csdn.net/weixin_33898876/article/details/94100934
 

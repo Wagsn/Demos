@@ -84,6 +84,7 @@ namespace Microsoft.Extensions.DependencyInjection
             //services.Configure<Microsoft.AspNetCore.Mvc.RazorPages.RazorPagesOptions>(options =>
             //{
             //    options.Conventions.Add(new GlobalTemplatePageRouteModelConvention());
+            //    options.Conventions.AddPageRoute("/extras/products", "product");
             //});
 
             return services;
