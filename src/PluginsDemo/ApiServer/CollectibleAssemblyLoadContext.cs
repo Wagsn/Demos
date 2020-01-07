@@ -9,14 +9,8 @@ namespace ApiServer
     /// </summary>
     public class CollectibleAssemblyLoadContext : AssemblyLoadContext
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public CollectibleAssemblyLoadContext()
-            // 可回收的
-            : base(isCollectible: true)
-        {
-        }
+        // 可回收的
+        public CollectibleAssemblyLoadContext() : base(isCollectible: true) { }
         protected override Assembly Load(AssemblyName name)
         {
             return null;
