@@ -16,11 +16,12 @@ namespace PhysicalFolderWatcherDemo
             var pluginDir = Path.Combine(AppContext.BaseDirectory, "Plugins");
             if (!Directory.Exists(pluginDir)) Directory.CreateDirectory(pluginDir);
             IFileProvider fileProvider = new PhysicalFileProvider(pluginDir);
-            OldFiles.AddRange(fileProvider.GetDirectoryContents("").Where(f => f.IsDirectory));
             // 监听文件夹 子文件夹内发生的任意修改将不会触发 子文件内容发生变化将不会触发
+            //OldFiles.AddRange(fileProvider.GetDirectoryContents("").Where(f => f.IsDirectory));
+            OldFiles.AddRange(fileProvider.GetDirectoryContents("*").Where(f => f.IsDirectory));
             ChangeToken.OnChange(() => fileProvider.Watch("*"), () =>
             {
-                var fileInfos = fileProvider.GetDirectoryContents("").Where(f => f.IsDirectory);
+                var fileInfos = fileProvider.GetDirectoryContents("*").Where(f => f.IsDirectory);
                 // 删除的文件
                 var delFiles = OldFiles.Where(a => !fileInfos.Any(b => b.PhysicalPath == a.PhysicalPath));
                 // 添加的文件
