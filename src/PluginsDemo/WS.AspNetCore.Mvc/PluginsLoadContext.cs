@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ApiServer.AspNetCore.Mvc
 {
@@ -10,14 +7,14 @@ namespace ApiServer.AspNetCore.Mvc
     /// </summary>
     public static class PluginsLoadContext
     {
-        private static Dictionary<string, CollectibleAssemblyLoadContext> _pluginContexts { get; } = new Dictionary<string, CollectibleAssemblyLoadContext>();
+        private static readonly Dictionary<string, CollectibleAssemblyLoadContext> _pluginContexts = new Dictionary<string, CollectibleAssemblyLoadContext>();
 
         public static bool Any(string pluginName)
         {
             return _pluginContexts.ContainsKey(pluginName);
         }
 
-        public static void RemovePluginContext(string pluginName)
+        public static void Remove(string pluginName)
         {
             if (_pluginContexts.ContainsKey(pluginName))
             {
@@ -26,14 +23,14 @@ namespace ApiServer.AspNetCore.Mvc
             }
         }
 
-        public static CollectibleAssemblyLoadContext GetContext(string pluginName)
+        public static CollectibleAssemblyLoadContext Get(string pluginName)
         {
             return _pluginContexts[pluginName];
         }
 
-        public static void AddPluginContext(string pluginNmae, CollectibleAssemblyLoadContext context)
+        public static void Add(string pluginName, CollectibleAssemblyLoadContext context)
         {
-            _pluginContexts.Add(pluginNmae, context);
+            _pluginContexts.Add(pluginName, context);
         }
     }
 }

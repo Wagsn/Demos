@@ -1,4 +1,5 @@
 ﻿using ApiServer.AspNetCore.Mvc;
+using ApiServer.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 using System;
@@ -44,19 +45,21 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     _presets.Add(filePath);
                     var context = new CollectibleAssemblyLoadContext();
+                    #region 采用 AssemblyLoadContext.LoadFromAssemblyPath(assemblyPath) 方式加载 Assembly
                     //var assembly = context.LoadFromAssemblyPath(filePath);
                     //var controllerAssemblyPart = new Microsoft.AspNetCore.Mvc.ApplicationParts.AssemblyPart(assembly);
                     //mvcBuilders.PartManager.ApplicationParts.Add(controllerAssemblyPart);
-                    using (var fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open))
-                    {
-                        var assembly = context.LoadFromStream(fs);
-
-                        var controllerAssemblyPart = new MyAssemblyPart(assembly);
-
-                        mvcBuilder.PartManager.ApplicationParts.Add(controllerAssemblyPart);
-                        PluginsLoadContext.AddPluginContext(System.IO.Path.GetFileNameWithoutExtension(filePath), context);
-                    }
+                    #endregion
+                    //using (var fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open))
+                    //{
+                    using var fs = new System.IO.FileStream(filePath, System.IO.FileMode.Open);
+                    var assembly = context.LoadFromStream(fs);
+                    var controllerAssemblyPart = new MyAssemblyPart(assembly);
+                    mvcBuilder.PartManager.ApplicationParts.Add(controllerAssemblyPart);
+                    PluginsLoadContext.Add(System.IO.Path.GetFileNameWithoutExtension(filePath), context);
+                    //}
                 }
+                //
             }
 
             // 配置`Razor`运行时编译
@@ -66,7 +69,6 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     options.AdditionalReferencePaths.Add(item);
                 }
-
                 AdditionalReferencePathHolder.AdditionalReferencePaths = options.AdditionalReferencePaths;
             });
 

@@ -23,3 +23,19 @@
 - 插件的启用
 - 插件的禁用
 - 插件的卸载
+
+插件项目结构
+```
+- ApiServer.dll
+- ApiServer.exe
+- ApiServer.pdb
+- PluginCore.dll
+- PluginCore.pdb
+- Plugins
+	- <Guid>
+		- plugin.json
+		- config.json
+		- <PluginDllName>.dll
+		- <PluginDllName>.pdb
+		- <Dependency>.dll
+```
