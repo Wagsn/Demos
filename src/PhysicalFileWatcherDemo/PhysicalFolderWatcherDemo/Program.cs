@@ -17,7 +17,7 @@ namespace PhysicalFolderWatcherDemo
             if (!Directory.Exists(pluginDir)) Directory.CreateDirectory(pluginDir);
             IFileProvider fileProvider = new PhysicalFileProvider(pluginDir);
             OldFiles.AddRange(fileProvider.GetDirectoryContents("").Where(f => f.IsDirectory));
-            // 监听文件夹 如果子文件夹的子文件夹发生修改将不会触发 如果子文件夹的文件内容发生变化不会触发
+            // 监听文件夹 子文件夹内发生的任意修改将不会触发 子文件内容发生变化将不会触发
             ChangeToken.OnChange(() => fileProvider.Watch("*"), () =>
             {
                 var fileInfos = fileProvider.GetDirectoryContents("").Where(f => f.IsDirectory);
@@ -31,7 +31,8 @@ namespace PhysicalFolderWatcherDemo
                 var allFiles = delFiles.ToDictionary(a => a.Name, status => 3)
                 .Union(addFiles.ToDictionary(a => a.Name, status => 1))
                 .Union(modFiles.ToDictionary(a => a.Name, status => 2));
-                Console.WriteLine($"{DateTime.Now.ToString("HH:mm:ss.FFFFFF")} {string.Join("\r\n", allFiles.Select(kv => $"{kv.Key} : {(kv.Value == 1 ? "Add" : (kv.Value == 2 ? "Mod" : "Del"))}"))}");
+                var statusDic = new Dictionary<int, string> { { 1, "Add" }, { 2, "Mod" }, { 3, "Del" } };
+                Console.WriteLine($"{DateTime.Now.ToString("HH:mm:ss.FFFFFF")} {string.Join("\r\n", allFiles.Select(kv => $"{kv.Key} : {statusDic[kv.Value]}"))}");
 
                 // 最后文件列表刷新
                 OldFiles.Clear();
