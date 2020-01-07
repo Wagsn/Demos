@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace ApiServer
+namespace ApiServer.AspNetCore.Mvc
 {
     /// <summary>
     /// 自定义`AssemblyPart`，手动返回空引用路径数组

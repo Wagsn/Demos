@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using System.Runtime.Loader;
 
-namespace ApiServer
+namespace ApiServer.AspNetCore.Mvc
 {
     /// <summary>
     /// 可回收的程序集加载上下文
