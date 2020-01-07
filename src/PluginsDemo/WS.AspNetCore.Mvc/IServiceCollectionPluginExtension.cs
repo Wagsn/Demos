@@ -72,13 +72,19 @@ namespace Microsoft.Extensions.DependencyInjection
                 AdditionalReferencePathHolder.AdditionalReferencePaths = options.AdditionalReferencePaths;
             });
 
-            // 手动配置`View`路由映射
+            // 添加`Razor`页面路由和应用模型约定
             services.Configure<Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions>(options =>
             {
                 // 2-PluginName, 1-Controller, 0-Action
                 options.AreaViewLocationFormats.Add("/Plugins/{2}/Views/{1}/{0}" + Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine.ViewExtension);
                 options.AreaViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
             });
+
+            // 为 IPageConvention 添加委托，以添加应用于 Razor 页面的模型约定。
+            //services.Configure<Microsoft.AspNetCore.Mvc.RazorPages.RazorPagesOptions>(options =>
+            //{
+            //    options.Conventions.Add(new GlobalTemplatePageRouteModelConvention());
+            //});
 
             return services;
         }
