@@ -17,8 +17,8 @@ namespace PhysicalFolderWatcherDemo
             if (!Directory.Exists(pluginDir)) Directory.CreateDirectory(pluginDir);
             IFileProvider fileProvider = new PhysicalFileProvider(pluginDir);
             // 监听文件夹 子文件夹内发生的任意修改将不会触发 子文件内容发生变化将不会触发
-            //OldFiles.AddRange(fileProvider.GetDirectoryContents("").Where(f => f.IsDirectory));
-            OldFiles.AddRange(fileProvider.GetDirectoryContents("*").Where(f => f.IsDirectory));
+            OldFiles.AddRange(fileProvider.GetDirectoryContents("").Where(f => f.IsDirectory));
+            // 监听监听所有文件，当文件发生修改时反应为某个子文件夹的修改，在最后将修改的文件夹路径打印出来
             ChangeToken.OnChange(() => fileProvider.Watch("*"), () =>
             {
                 var fileInfos = fileProvider.GetDirectoryContents("*").Where(f => f.IsDirectory);
@@ -33,7 +33,7 @@ namespace PhysicalFolderWatcherDemo
                 .Union(addFiles.ToDictionary(a => a.Name, status => 1))
                 .Union(modFiles.ToDictionary(a => a.Name, status => 2));
                 var statusDic = new Dictionary<int, string> { { 1, "Add" }, { 2, "Mod" }, { 3, "Del" } };
-                Console.WriteLine($"{DateTime.Now.ToString("HH:mm:ss.FFFFFF")} {string.Join("\r\n", allFiles.Select(kv => $"{kv.Key} : {statusDic[kv.Value]}"))}");
+                Console.WriteLine($"- {DateTime.Now.ToString("HH:mm:ss.FFFFFF")}\r\n{string.Join("\r\n", allFiles.Select(kv => $"{kv.Key} : {statusDic[kv.Value]}"))}");
 
                 // 最后文件列表刷新
                 OldFiles.Clear();
@@ -41,6 +41,8 @@ namespace PhysicalFolderWatcherDemo
             });
             while (true)
             {
+                // 创建测试数据
+
                 Task.Delay(5 * 1000).Wait();
             }
         }
