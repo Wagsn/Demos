@@ -14,7 +14,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         private static IList<string> _presets = new List<string>();
 
-        public static IServiceCollection AddPlugins(this IServiceCollection services, Action<PluginSetupOptions> configAction)
+        public static IServiceCollection AddPluginCore(this IServiceCollection services, Action<PluginSetupOptions> configAction)
         {
             var pluginSetupOptions = new PluginSetupOptions();
             configAction(pluginSetupOptions);
@@ -75,6 +75,7 @@ namespace Microsoft.Extensions.DependencyInjection
             // 手动配置`View`路由映射
             services.Configure<Microsoft.AspNetCore.Mvc.Razor.RazorViewEngineOptions>(options =>
             {
+                // 2-PluginName, 1-Controller, 0-Action
                 options.AreaViewLocationFormats.Add("/Plugins/{2}/Views/{1}/{0}" + Microsoft.AspNetCore.Mvc.Razor.RazorViewEngine.ViewExtension);
                 options.AreaViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
             });

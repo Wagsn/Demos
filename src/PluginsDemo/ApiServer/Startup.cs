@@ -27,7 +27,7 @@ namespace ApiServer
             var mvcBuilder = services.AddControllers();
 
             // Ìí¼Ó²å¼þÒýÇæ
-            services.AddPlugins(options =>
+            services.AddPluginCore(options =>
             {
                 options.MvcBuilder = mvcBuilder;
                 //options.Configuration = Configuration;
