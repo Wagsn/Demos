@@ -80,11 +80,54 @@ namespace Microsoft.Extensions.DependencyInjection
                 options.AreaViewLocationFormats.Add("/Views/Shared/{0}.cshtml");
             });
 
-            // 为 IPageConvention 添加委托，以添加应用于 Razor 页面的模型约定。
+            //// 为 IPageConvention 添加委托，以添加应用于 Razor 页面的模型约定。
             //services.Configure<Microsoft.AspNetCore.Mvc.RazorPages.RazorPagesOptions>(options =>
             //{
             //    options.Conventions.Add(new GlobalTemplatePageRouteModelConvention());
+            //    options.Conventions.Add(new GlobalHeaderPageApplicationModelConvention());
+            //    options.Conventions.Add(new GlobalPageHandlerModelConvention());
+            //    // 将 URL www.domain.com/product 映射到Razor 页面 “extras”文件夹“products.cshtml”文件
             //    options.Conventions.AddPageRoute("/extras/products", "product");
+            //    // 路由模板（*）通配符表示“全部”。即使使用此配置，磁盘上的现有文件和URL之间的匹配规则仍然正常运行。
+            //    options.Conventions.AddPageRoute("/index", "{*url}");
+            //    // 重点关注三点：1是路由作用域，2是order路由顺序，3是定义好Template路由规则。
+            //    options.Conventions.AddFolderRouteModelConvention("/OtherPages", model =>
+            //    {
+            //        //OtherPages文件夹下的页面，都用此路由模板。
+            //        var selectorCount = model.Selectors.Count;
+            //        for (var i = 0; i < selectorCount; i++)
+            //        {
+            //            var selector = model.Selectors[i];
+            //            model.Selectors.Add(new AspNetCore.Mvc.ApplicationModels.SelectorModel
+            //            {
+            //                AttributeRouteModel = new AspNetCore.Mvc.ApplicationModels.AttributeRouteModel
+            //                {
+            //                    //用于处理路由匹配,指定路由处理顺序。按顺序处理的路由 (-1、 0、 1、 2、 … n)
+            //                    Order = 2,
+            //                    Template = AspNetCore.Mvc.ApplicationModels.AttributeRouteModel.CombineTemplates
+            //                    (selector.AttributeRouteModel.Template, "{otherPagesTemplate?}")
+            //                }
+            //            });
+            //        }
+            //    });
+            //    options.Conventions.AddPageRouteModelConvention("/About", model =>
+            //    {
+            //        //About页面,用此路由模板。
+            //        var selectorCount = model.Selectors.Count;
+            //        for (var i = 0; i < selectorCount; i++)
+            //        {
+            //            var selector = model.Selectors[i];
+            //            model.Selectors.Add(new AspNetCore.Mvc.ApplicationModels.SelectorModel
+            //            {
+            //                AttributeRouteModel = new AspNetCore.Mvc.ApplicationModels.AttributeRouteModel
+            //                {
+            //                    Order = 2,
+            //                    Template = AspNetCore.Mvc.ApplicationModels.AttributeRouteModel.CombineTemplates
+            //                    (selector.AttributeRouteModel.Template, "{aboutTemplate?}")
+            //                }
+            //            });
+            //        }
+            //    });
             //});
 
             return services;
