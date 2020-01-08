@@ -19,11 +19,22 @@ namespace PluginCore
         /// 插件根路径
         /// </summary>
         public string PluginBasePath { get; internal set; }
+        ///// <summary>
+        ///// 当前插件内核上下文
+        ///// </summary>
+        //public static PluginCoreContext Current { get; private set; }
+        /// <summary>
+        /// 插件工厂
+        /// </summary>
         public IPluginFactory PluginFactory { get; internal set; }
         /// <summary>
         /// 加载的程序集
         /// </summary>
         public List<Assembly> AdditionalAssembly { get; internal set; } = new List<Assembly>();
+        /// <summary>
+        /// 插件配置存储
+        /// </summary>
+        public IPluginConfigStorage PluginConfigStorage { get; set; }
 
         //public static PluginCoreContext Current { get; private set; }
 

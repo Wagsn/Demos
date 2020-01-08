@@ -24,14 +24,12 @@ namespace PluginCore
                 {
                     var r = await pi.Instance.Init(context);
                     pi.SetInitFail(r.Code != "0");
-                    //pi.SetMessage(r.Message);
-                    //Logger.Debug("plugin {0} init {1} {2}", pi.Name, r.Code, r.Message ?? "");
                 }
                 catch (Exception e)
                 {
                     //Logger.Error("plugin {0} init error \r\n{1}", pi.Name, e.ToString());
-                    //pi.SetInitFail(true);
-                    //pi.SetMessage(e.Message);
+                    pi.SetInitFail(true);
+                    pi.SetMessage(e.Message);
                 }
             }
             return true;
@@ -75,7 +73,7 @@ namespace PluginCore
                         //}
                         PluginList.Add(pi);
                     }
-                    catch (Exception ex)
+                    catch
                     {
                         //Logger.Error("can not load plugin type: {0}\r\n{1}", t.FullName, e.ToString());
                     }

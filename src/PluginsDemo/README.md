@@ -2,6 +2,12 @@
 
 插件实现机制 ApplicationPartManager+IActionDescriptorChangeProvider+AssemblyLoadContext+接口约束
 
+解决方案
+- ApiServer 宿主服务
+- ApiServer.AspNetCore.Mvc MVC插件加载框架
+- PluginCore 插件框架内核
+- PluginSDK 插件开发SDK
+
 参考
 - https://blog.csdn.net/weixin_33898876/article/details/94100934
 

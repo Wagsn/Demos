@@ -6,51 +6,61 @@ using System.Threading.Tasks;
 namespace PluginCore
 {
     /// <summary>
-    /// 插件
+    /// 插件基类
+    /// 传入PluginCoreContext用来依赖注入
     /// </summary>
     public abstract class PluginBase<TConfig> : IPlugin, IPluginConfig<TConfig> where TConfig : class
     {
+        public abstract string PluginName { get; set; }
+
+        public abstract TConfig GetDefaultConfig();
+
+        public PluginCoreContext PluginCoreCtext { get; set; }
+
         /// <summary>
         /// 配置更改
         /// </summary>
-        /// <param name="context"></param>
         /// <param name="newConfig"></param>
         /// <returns></returns>
-        public virtual Task<PluginResultMessage> ConfigChanged(PluginCoreContext context, TConfig newConfig)
+        public virtual Task<PluginResultMessage> ConfigChanged(TConfig newConfig)
         {
             return Task.FromResult(new PluginResultMessage());
         }
 
-        public Task<TConfig> GetConfig(PluginCoreContext context)
-        {
-            throw new NotImplementedException();
-        }
-
         /// <summary>
-        /// 获取默认配置
+        /// 获取配置
         /// </summary>
-        /// <param name="context"></param>
         /// <returns></returns>
-        public abstract TConfig GetDefaultConfig(PluginCoreContext context);
-
-        public Task<PluginResultMessage> Init(PluginCoreContext context)
+        public Task<TConfig> GetConfig()
         {
-            throw new NotImplementedException();
+            TConfig cfg = PluginCoreCtext.PluginConfigStorage.GetConfig<TConfig>(PluginName).Result.Data;
+            if (cfg == null)
+            {
+                cfg = GetDefaultConfig();
+                PluginCoreCtext.PluginConfigStorage.SaveConfig(PluginName, cfg);
+            }
+            return Task.FromResult(cfg);
         }
 
-        public Task<bool> SaveConfig(TConfig cfg)
+        public virtual Task<PluginResultMessage> Init(PluginCoreContext context)
         {
-            throw new NotImplementedException();
+            this.PluginCoreCtext = context;
+            return Task.FromResult(new PluginResultMessage());
         }
 
-        public Task<PluginResultMessage> Start(PluginCoreContext context)
+        public virtual Task<bool> SaveConfig(TConfig cfg)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(true);
         }
 
-        public Task<PluginResultMessage> Stop(PluginCoreContext context)
+        public virtual Task<PluginResultMessage> Start(PluginCoreContext context)
         {
-            throw new NotImplementedException();
+            return Task.FromResult(new PluginResultMessage());
+        }
+
+        public virtual Task<PluginResultMessage> Stop(PluginCoreContext context)
+        {
+            return Task.FromResult(new PluginResultMessage());
         }
     }
 }

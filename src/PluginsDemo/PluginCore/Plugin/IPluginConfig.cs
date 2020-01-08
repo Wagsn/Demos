@@ -11,13 +11,12 @@ namespace PluginCore
     /// <typeparam name="TConfig"></typeparam>
     public interface IPluginConfig<TConfig>
     {
-        //Type ConfigType { get; }
         /// <summary>
-        /// 获取配置
+        /// 通过插件名称获取配置信息
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        Task<TConfig> GetConfig(PluginCoreContext context);
+        Task<TConfig> GetConfig();
         /// <summary>
         /// 保存
         /// </summary>
@@ -29,13 +28,13 @@ namespace PluginCore
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>
-        TConfig GetDefaultConfig(PluginCoreContext context);
+        TConfig GetDefaultConfig();
         /// <summary>
         /// 配置被更改
         /// </summary>
         /// <param name="context"></param>
         /// <param name="newConfig"></param>
         /// <returns></returns>
-        Task<PluginResultMessage> ConfigChanged(PluginCoreContext context, TConfig newConfig);
+        Task<PluginResultMessage> ConfigChanged(TConfig newConfig);
     }
 }

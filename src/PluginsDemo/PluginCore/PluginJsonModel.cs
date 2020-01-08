@@ -7,7 +7,7 @@ namespace PluginCore
     /// <summary>
     /// 插件信息
     /// </summary>
-    public class PluginInfo
+    public class PluginJsonModel
     {
         /// <summary>
         /// 唯一插件名称
