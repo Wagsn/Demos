@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PhysicalFolderWatcherDemo
@@ -15,54 +14,66 @@ namespace PhysicalFolderWatcherDemo
         {
             var pluginDir = Path.Combine(AppContext.BaseDirectory, "Plugins");
             if (!Directory.Exists(pluginDir)) Directory.CreateDirectory(pluginDir);
-            IFileProvider fileProvider = new PhysicalFileProvider(pluginDir);
-            // 监听文件夹 子文件夹内发生的任意修改将不会触发 子文件内容发生变化将不会触发
-            OldFiles.AddRange(fileProvider.GetDirectoryContents("").Where(f => f.IsDirectory));
-            // 监听监听所有文件，当文件发生修改时反应为某个子文件夹的修改，在最后将修改的文件夹路径打印出来
-            ChangeToken.OnChange(() => fileProvider.Watch("*"), () =>
+            // 监听子文件夹内容的变化
+            WatchSubfolderChange(pluginDir, (modPluginDirs) =>
             {
-                var fileInfos = fileProvider.GetDirectoryContents("*").Where(f => f.IsDirectory);
-                // 删除的文件
-                var delFiles = OldFiles.Where(a => !fileInfos.Any(b => b.PhysicalPath == a.PhysicalPath));
-                // 添加的文件
-                var addFiles = fileInfos.Where(a => !OldFiles.Any(b => b.PhysicalPath == a.PhysicalPath));
-                // 修改的文件 判断：新文件中有并且修改时间大于旧文件
-                var modFiles = OldFiles.Where(a => fileInfos.FirstOrDefault(b => b.PhysicalPath == a.PhysicalPath)?.LastModified > a.LastModified);
-
-                var allFiles = delFiles.ToDictionary(a => a.Name, status => 3)
-                .Union(addFiles.ToDictionary(a => a.Name, status => 1))
-                .Union(modFiles.ToDictionary(a => a.Name, status => 2));
-                var statusDic = new Dictionary<int, string> { { 1, "Add" }, { 2, "Mod" }, { 3, "Del" } };
-                Console.WriteLine($"- {DateTime.Now.ToString("HH:mm:ss.FFFFFF")}\r\n{string.Join("\r\n", allFiles.Select(kv => $"{kv.Key} : {statusDic[kv.Value]}"))}");
-
-                // 最后文件列表刷新
-                OldFiles.Clear();
-                OldFiles.AddRange(fileInfos);
+                Console.WriteLine($"- {DateTime.Now.ToString("HH:mm:ss.FFFFFF")}\r\n{string.Join("\r\n", modPluginDirs.Select(a => $"{a} : Mod"))}");
             });
             while (true)
             {
-                // 创建测试数据
-
                 Task.Delay(5 * 1000).Wait();
             }
         }
 
-        public static List<IFileInfo> OldFiles { get; } = new List<IFileInfo>();
-
-        public static void PrintDllNames(IEnumerable<string> names)
+        /// <summary>
+        /// 监听子文件夹变化（当子文件夹中的文件发生改变）
+        /// </summary>
+        /// <param name="rootPath"></param>
+        /// <param name="onChange4Subfolder"></param>
+        public static void WatchSubfolderChange(string rootPath, Action<IEnumerable<string>> onChange4Subfolder)
         {
-            Console.WriteLine($"- {DateTime.Now.ToString("HH:mm:ss.FFFFFF")} Plugin Dlls {names.Count()}\r\n{string.Join("\r\n", names)}\r\n");
+            PhysicalFileProvider fileProvider = new PhysicalFileProvider(rootPath);
+            // 递归查询所有子文件
+            OldFiles.AddRange(GetAllSubFiles(fileProvider, "").Where(f => !f.IsDirectory));
+            // 监听监听所有文件，当文件发生修改时反应为某个子文件夹的修改，在最后将修改的文件夹路径打印出来
+            // Example: **/*.cs, *.*, subFolder/**/*.cshtml.
+            ChangeToken.OnChange(() => fileProvider.Watch("*"), () =>
+            {
+                // 递归查询所有子文件
+                var files = GetAllSubFiles(fileProvider, "").Where(f => !f.IsDirectory);
+                // 查询根目录下的子文件夹
+                var subfolders = fileProvider.GetDirectoryContents("");
+                // 变化的文件
+                var modFiles = OldFiles.Where(a => (!files.Any(b => b.PhysicalPath == a.PhysicalPath))
+                        || files.FirstOrDefault(b => b.PhysicalPath == a.PhysicalPath)?.LastModified > a.LastModified)
+                    .Union(files.Where(a => !OldFiles.Any(b => b.PhysicalPath == a.PhysicalPath)))
+                    .Select(f => f.PhysicalPath);
+
+                // 发生变化的文件夹
+                var modPluginDirs = subfolders.Select(f => f.PhysicalPath).Where(a => modFiles.Any(b => b.Contains(a)));
+
+                // 修改回调
+                if(modPluginDirs.Any()) onChange4Subfolder(modPluginDirs);
+
+                // 最后文件列表刷新
+                OldFiles.Clear();
+                OldFiles.AddRange(files);
+            });
         }
 
-        //ChangeToken.OnChange(() => fileProvider.Watch("Data.txt"), () => LoadFileAsync(fileProvider));
-        public static async void LoadFileAsync(IFileProvider fileProvider)
+        public static List<IFileInfo> OldFiles { get; } = new List<IFileInfo>();
+
+        private static IEnumerable<IFileInfo> GetAllSubFiles(PhysicalFileProvider fileProvider, string subPath)
         {
-            Stream stream = fileProvider.GetFileInfo("Data.txt").CreateReadStream();
+            var rootPath = fileProvider.Root;
+            List<IFileInfo> fileInfos = new List<IFileInfo>();
+            var files = fileProvider.GetDirectoryContents(subPath).ToList();
+            foreach (var dir in files.Where(a => a.IsDirectory))
             {
-                byte[] buffer = new byte[stream.Length];
-                await stream.ReadAsync(buffer, 0, buffer.Length);
-                Console.WriteLine(Encoding.UTF8.GetString(buffer));
+                fileInfos.AddRange(GetAllSubFiles(fileProvider, dir.PhysicalPath.Substring(rootPath.Length)));
             }
+            fileInfos.AddRange(files);
+            return fileInfos;
         }
     }
 }
