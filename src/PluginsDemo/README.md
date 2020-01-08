@@ -26,13 +26,14 @@
 - 插件的禁用
 - 插件的卸载
 
-插件项目结构
+项目输出结构
 ```
 - ApiServer.dll
 - ApiServer.exe
 - ApiServer.pdb
 - PluginCore.dll
 - PluginCore.pdb
+- PluginSDK.dll
 - Plugins
 	- <Guid>
 		- plugin.json
@@ -41,3 +42,13 @@
 		- <PluginDllName>.pdb
 		- <Dependency>.dll
 ```
+
+自定义插件项目结构
+- WS.EmailSender
+	- Plugin.cs
+	- PluginConfig.cs
+	- Basic
+	- Controllers
+	- Data
+	- Managers
+	- Stores

@@ -56,8 +56,7 @@ namespace PhysicalFolderWatcherDemo
                 if(modPluginDirs.Any()) onChange4Subfolder(modPluginDirs);
 
                 // 最后文件列表刷新
-                OldFiles.Clear();
-                OldFiles.AddRange(files);
+                OldFiles.Refresh(files);
             });
         }
 
