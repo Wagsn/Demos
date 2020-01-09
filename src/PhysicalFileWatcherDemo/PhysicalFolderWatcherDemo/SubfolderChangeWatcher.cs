@@ -7,7 +7,7 @@ using System.Linq;
 namespace PhysicalFolderWatcherDemo
 {
     /// <summary>
-    /// 子文件夹内容变化监听器
+    /// Subfolder content change listener
     /// </summary>
     public class SubfolderChangeWatcher : IDisposable
     {
