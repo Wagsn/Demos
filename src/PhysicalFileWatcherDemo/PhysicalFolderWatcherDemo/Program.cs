@@ -12,7 +12,7 @@ namespace PhysicalFolderWatcherDemo
             var pluginDir = Path.Combine(AppContext.BaseDirectory, "Plugins");
             if (!Directory.Exists(pluginDir)) Directory.CreateDirectory(pluginDir);
             // 监听子文件夹内容的变化
-            SubfolderChangeWatcher.WatchSubfolderChange(pluginDir, (modPluginDirs) =>
+            using var watcher = SubfolderChangeWatcher.Watch(pluginDir, (modPluginDirs) =>
             {
                 Console.WriteLine($"- {DateTime.Now.ToString("HH:mm:ss.FFFFFF")}\r\n{string.Join("\r\n", modPluginDirs.Select(a => $"{a} : Mod"))}");
             });
