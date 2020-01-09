@@ -10,9 +10,9 @@ namespace PhysicalFolderWatcherDemo
     public class SubfolderChangeWatcher
     {
         /// <summary>
-        /// 监听子文件夹变化
+        /// 监听子文件夹内容变化
         /// </summary>
-        /// <param name="rootPath"></param>
+        /// <param name="rootPath">监听根路径</param>
         /// <param name="onChange">修改回调（子文件夹中的文件发生变化）</param>
         public static void WatchSubfolderChange(string rootPath, Action<IEnumerable<string>> onChange)
         {
