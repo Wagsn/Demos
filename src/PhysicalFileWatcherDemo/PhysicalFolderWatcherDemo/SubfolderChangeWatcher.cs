@@ -69,13 +69,5 @@ namespace PhysicalFolderWatcherDemo
             FileProvider = null;
             Files.Clear();
         }
-        /// <summary>
-        /// Disposes the watcher.
-        /// </summary>
-        /// <param name="disposing">true is invoked from System.IDisposable.Dispose.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (disposing) Dispose();
-        }
     }
 }
