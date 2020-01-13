@@ -14,9 +14,13 @@ namespace PhysicalFileWatcherDemo
         static void Main(string[] args)
         {
             var pluginDir = Path.Combine(AppContext.BaseDirectory, @"Plugins");
+            if (!Directory.Exists(pluginDir))
+            {
+                Directory.CreateDirectory(pluginDir);
+            }
             IFileProvider fileProvider = new PhysicalFileProvider(pluginDir);
             OldFiles.AddRange(fileProvider.GetDirectoryContents(""));
-            ChangeToken.OnChange(() => fileProvider.Watch("*.dll"), () => 
+            ChangeToken.OnChange(() => fileProvider.Watch("*"), () => 
             {
                 var fileInfos = fileProvider.GetDirectoryContents("");
                 // 删除的文件
