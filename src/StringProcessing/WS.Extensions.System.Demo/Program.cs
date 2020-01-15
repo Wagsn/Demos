@@ -6,19 +6,23 @@ namespace WS.Extensions.System.Demo
     {
         static void Main(string[] args)
         {
-            //var text = "";
-            //text = "三万万";
-            //Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
-            //text = "一亿零三千四";
-            //Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
-            //text = "一亿二千三百四十五万六千七百八十九";
-            //Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
-            //text = "一亿二千八十九";
-            //Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
-            //text = "一亿二千八十九万万";
-            //Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
-            //text = "一千五";
-            //Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
+            var text = "";
+            text = "三万万";
+            Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
+            text = "一亿零三千四";
+            Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
+            text = "一亿二千三百四十五万六千七百八十九";
+            Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
+            text = "一亿二千八十九";
+            Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
+            text = "一亿二千八十九万万";
+            Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
+            text = "一千五";
+            Console.WriteLine($"{text}: {text.ToArabicNumeral()}");
+
+            Console.WriteLine($"{long.MaxValue}: {long.MaxValue.ToChinese()}");
+            Console.WriteLine($"{int.MaxValue}: {int.MaxValue.ToChinese()}");
+            Console.WriteLine($"{250}: {250.ToChinese()}");
         }
     }
 }
