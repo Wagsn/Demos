@@ -11,10 +11,19 @@ namespace FileToolsDemo
     {
         static void Main(string[] args)
         {
+            // 为实体公共属性添加注释
+            // Regex.Replace(code, @"(?<!summary>\s*)(public\s+\w+\s+)(\w+)(\s*\{\s*get;\s*set;\s*\})", "/// <summary>\r\n\t\t/// $2\r\n\t\t/// </summary>\r\n\t\t$1$2$3")
+            var root = @"F:\Workspace\XProject\gitlab\brokers\api\XKJCustomerPlugin\Dto\Response";
+            ReplaceAllContent(root, "*.cs", @"(?<!summary>\s*)(public\s+[\w<>]+\??\s+)(\w+)(\s*\{\s*get;\s*set;\s*\})", "/// <summary>\r\n\t\t/// $2\r\n\t\t/// </summary>\r\n\t\t$1$2$3");
+
+            //var fileA = @"F:\Download\BaiduNetdiskDownload\17ndao19nian\2019\2019年PWD byzhihuo\19.01\骑士\1_trapped1_4k.jpg";
+            //var fileB = @"F:\Download\BaiduNetdiskDownload\17ndao19nian\2019\2019.01_1_trapped1_4k.jpg";
+            //Console.WriteLine(GetFileHash(fileA) == GetFileHash(fileB));
+
             //var root = AppContext.BaseDirectory;
             //CreateTestData(root);
-            var root = @"";
-            LowerFileLevel(root);
+            //var root = @"";
+            //LowerFileLevel(root);
             //MoveFilesToTop(root);
             //Rename(root, @"(\\19\.)", @"\2019.");
 
@@ -26,6 +35,48 @@ namespace FileToolsDemo
             //    Console.WriteLine($"hash: {GetFileHash(path:first)}");
             //    Console.WriteLine($"sign: {GetFileSignature(path:first)}");
             //}
+        }
+
+        /// <summary>
+        /// 正则替换所有搜索的文本文件的内容
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="searchPattern"></param>
+        /// <param name="pattern"></param>
+        /// <param name="replacement"></param>
+        public static void ReplaceAllContent(string root, string searchPattern, string pattern, string replacement)
+        {
+            var files = Directory.EnumerateFiles(root, searchPattern, SearchOption.AllDirectories);
+
+            foreach(var file in files)
+            {
+                try
+                {
+                    var code = File.ReadAllText(file);
+                    var outCode = Regex.Replace(code, pattern, replacement);
+
+                    File.WriteAllText(file, outCode);
+                }
+                catch 
+                {
+                    // 忽略失败的
+                }
+            }
+        }
+
+        /// <summary>
+        /// 统计文件夹下的所有文件
+        /// TODO 每个文件做比对，如果HASH码相等则视为同一文件
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="searchPattern"></param>
+        /// <param name="compare">相似性比较，100=完全相等，20=名称一致，10=后缀一致，0-完全不等</param>
+        public static int StatisticSearchCompare(string root, string searchPattern, Func<string, string, int> compare)
+        {
+            var files = Directory.EnumerateFiles(root, searchPattern, SearchOption.AllDirectories);
+            files = files.Distinct();
+
+            return Directory.EnumerateFiles(root, searchPattern, SearchOption.AllDirectories).Count();
         }
 
         /// <summary>
@@ -58,7 +109,7 @@ namespace FileToolsDemo
         /// 创建测试数据
         /// </summary>
         /// <param name="root"></param>
-        static void CreateTestData(string root)
+        public static void CreateTestData(string root)
         {
             if(root == null)
             {
@@ -84,7 +135,7 @@ namespace FileToolsDemo
         /// </summary>
         /// <param name="path"></param>
         /// <returns></returns>
-        static string GetFileSignature(string path)
+        public static string GetFileSignature(string path)
         {
             return path;
         }
@@ -94,7 +145,7 @@ namespace FileToolsDemo
         /// </summary>
         /// <param name="path">文件路径</param>
         /// <returns></returns>
-        static string GetFileHash(string path)
+        public static string GetFileHash(string path)
         {
             // 获取HASH MD5.Create()
             var hash = SHA256.Create();
@@ -108,7 +159,7 @@ namespace FileToolsDemo
         /// 移动一级文件夹中的文件到根文件夹中
         /// </summary>
         /// <param name="root"></param>
-        static void MoveFilesToTop(string root)
+        public static void MoveFilesToTop(string root)
         {
             // 根路径下的文件夹
             var rootDirs = Directory.EnumerateDirectories(root);
@@ -147,7 +198,7 @@ namespace FileToolsDemo
         /// 如果文件名不带其上级文件夹名称前缀则追加，否则不追加
         /// </summary>
         /// <param name="root">根路径；工作路径</param>
-        static void LowerFileLevel(string root)
+        public static void LowerFileLevel(string root)
         {
             // 根路径下的文件夹
             var rootDirs = Directory.EnumerateDirectories(root);
