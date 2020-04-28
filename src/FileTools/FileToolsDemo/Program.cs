@@ -11,10 +11,17 @@ namespace FileToolsDemo
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("输入要处理的文件夹：");
+            var root = Console.ReadLine();
+
+            //RenameFileName(root, @"^(.*)$", @"20$1");
+
+            LowerFileLevel(root);
+
             // 为实体公共属性添加注释
             // Regex.Replace(code, @"(?<!summary>\s*)(public\s+\w+\s+)(\w+)(\s*\{\s*get;\s*set;\s*\})", "/// <summary>\r\n\t\t/// $2\r\n\t\t/// </summary>\r\n\t\t$1$2$3")
-            var root = @"F:\Workspace\XProject\gitlab\brokers\api\XKJCustomerPlugin\Dto\Response";
-            ReplaceAllContent(root, "*.cs", @"(?<!summary>\s*)(public\s+[\w<>]+\??\s+)(\w+)(\s*\{\s*get;\s*set;\s*\})", "/// <summary>\r\n\t\t/// $2\r\n\t\t/// </summary>\r\n\t\t$1$2$3");
+            //var root = @"F:\Workspace\XProject\gitlab\brokers\api\XKJCustomerPlugin\Dto\Response";
+            //ReplaceAllContent(root, "*.cs", @"(?<!summary>\s*)(public\s+[\w<>]+\??\s+)(\w+)(\s*\{\s*get;\s*set;\s*\})", "/// <summary>\r\n\t\t/// $2\r\n\t\t/// </summary>\r\n\t\t$1$2$3");
 
             //var fileA = @"F:\Download\BaiduNetdiskDownload\17ndao19nian\2019\2019年PWD byzhihuo\19.01\骑士\1_trapped1_4k.jpg";
             //var fileB = @"F:\Download\BaiduNetdiskDownload\17ndao19nian\2019\2019.01_1_trapped1_4k.jpg";
@@ -80,18 +87,44 @@ namespace FileToolsDemo
         }
 
         /// <summary>
-        /// 批量正则修改文件夹下的文件名
+        /// 批量正则修改文件夹下的文件的路径
         /// </summary>
         /// <param name="root"></param>
         /// <param name="pattern"></param>
         /// <param name="replacement"></param>
-        public static void Rename(string root, string pattern, string replacement)
+        public static void RenamePath(string root, string pattern, string replacement)
         {
             var files = Directory.EnumerateFiles(root);
             var outs = new Dictionary<string, string>();
             foreach(var path in files)
             {
                 outs[path] = Regex.Replace(path, pattern, replacement);
+            }
+            foreach(var kv in outs)
+            {
+                if (File.Exists(kv.Value))
+                {
+                    continue;
+                }
+                Console.WriteLine($"Rename from {kv.Key} to {kv.Value}");
+                File.Move(kv.Key, kv.Value);
+                Console.WriteLine("OK");
+            }
+        }
+
+        /// <summary>
+        /// 批量正则修改文件夹下的文件文件名
+        /// </summary>
+        /// <param name="root"></param>
+        /// <param name="pattern"></param>
+        /// <param name="replacement"></param>
+        public static void RenameFileName(string root, string pattern, string replacement)
+        {
+            var files = Directory.EnumerateFiles(root);
+            var outs = new Dictionary<string, string>();
+            foreach(var path in files)
+            {
+                outs[path] = Path.Combine(Path.GetDirectoryName(path), Regex.Replace(Path.GetFileName(path), pattern, replacement));
             }
             foreach(var kv in outs)
             {
@@ -156,7 +189,7 @@ namespace FileToolsDemo
         }
 
         /// <summary>
-        /// 移动一级文件夹中的文件到根文件夹中
+        /// 将子文件夹中的文件移动到根文件夹中
         /// </summary>
         /// <param name="root"></param>
         public static void MoveFilesToTop(string root)
@@ -208,7 +241,7 @@ namespace FileToolsDemo
             {
                 subs[item] = Directory.EnumerateFiles(item).ToList();
             }
-            // 构建改名路径 "/2018/01.ext" -> "/2018_01.ext"  "2018/01/02.ext"->"/2018_01/02.ext"
+            // 构建改名路径 "/2018/01.ext" -> "/2018_01.ext"
             // outputs key = "/2018/01.ext" value = "/2018_01.ext"
             var outputs = new Dictionary<string, string>();
             foreach(var folder in subs.Keys)
