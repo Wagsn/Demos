@@ -14,9 +14,12 @@ namespace FileToolsDemo
             Console.WriteLine("输入要处理的文件夹：");
             var root = Console.ReadLine();
 
+            DisplayTreePath(root);
+            //DeleteEmptyFolder(root);
+
             //RenameFileName(root, @"^(.*)$", @"20$1");
 
-            LowerFileLevel(root);
+            //LowerFileLevel(root);
 
             // 为实体公共属性添加注释
             // Regex.Replace(code, @"(?<!summary>\s*)(public\s+\w+\s+)(\w+)(\s*\{\s*get;\s*set;\s*\})", "/// <summary>\r\n\t\t/// $2\r\n\t\t/// </summary>\r\n\t\t$1$2$3")
@@ -42,6 +45,49 @@ namespace FileToolsDemo
             //    Console.WriteLine($"hash: {GetFileHash(path:first)}");
             //    Console.WriteLine($"sign: {GetFileSignature(path:first)}");
             //}
+        }
+
+        /// <summary>
+        /// 显示树状路径
+        /// └ ─ ┕ ━ ├ ┬ ┝ ┯ │
+        /// </summary>
+        /// <param name="root"></param>
+        public static void DisplayTreePath(string root)
+        {
+            Console.WriteLine("└ ─ ┕ ━ ├ ┬ ┝ ┯ │ ");
+            Console.WriteLine("├ ─  S");
+            Console.WriteLine("┝ ┯  S");
+            Console.WriteLine("│ ├ ─  S");
+            Console.WriteLine("│ ┕ ━  S");
+            Console.WriteLine("└ ─  S");
+        }
+
+        /// <summary>
+        /// 删除空文件夹
+        /// </summary>
+        /// <param name="root"></param>
+        public static void DeleteEmptyFolder(string root)
+        {
+            // 查询子文件夹，遍历子文件夹
+            var folders = Directory.EnumerateDirectories(root);
+            foreach(var item in folders)
+            {
+                DeleteEmptyFolder(item);
+            }
+            // 查询是否有子文件和子文件夹
+            var paths = Directory.EnumerateFileSystemEntries(root);
+            if (!paths.Any())
+            {
+                try
+                {
+                    Directory.Delete(root);
+                    Console.WriteLine("Deleted " + root);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Delete failed: " + ex.Message);
+                }
+            }
         }
 
         /// <summary>
