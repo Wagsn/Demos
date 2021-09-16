@@ -59,7 +59,8 @@ namespace Microsoft.Extensions.DependencyInjection
                     PluginsLoadContext.Add(System.IO.Path.GetFileNameWithoutExtension(filePath), context);
                     //}
                 }
-                //
+                // 设置插件文件夹监听器
+
             }
 
             // 配置`Razor`运行时编译
