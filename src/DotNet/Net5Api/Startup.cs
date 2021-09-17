@@ -51,6 +51,8 @@ namespace Net5Api
             {
                 endpoints.MapControllers();
             });
+
+            new SwaggerApiClient.swaggerClient("", new System.Net.Http.HttpClient()).WeatherForecastAsync();
         }
     }
 }

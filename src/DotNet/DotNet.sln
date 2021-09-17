@@ -17,11 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore21Lib", "NetCore21Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore31Lib", "NetCore31Lib\NetCore31Lib.csproj", "{95727BEF-E6FD-4E37-8B4D-090D16705267}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net5Lib", "Net5Lib\Net5Lib.csproj", "{F774EF33-CECB-4647-ACAE-5F9808A8FD51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Net5Lib", "Net5Lib\Net5Lib.csproj", "{F774EF33-CECB-4647-ACAE-5F9808A8FD51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore31Api", "NetCore31Api\NetCore31Api.csproj", "{36E1D4CB-1DB0-495F-AE73-C9AAEC33CEEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore31Api", "NetCore31Api\NetCore31Api.csproj", "{36E1D4CB-1DB0-495F-AE73-C9AAEC33CEEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetCore21Api", "NetCore21Api\NetCore21Api.csproj", "{1AA9F374-405C-48A0-885D-BF92DD604218}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NetCore21Api", "NetCore21Api\NetCore21Api.csproj", "{1AA9F374-405C-48A0-885D-BF92DD604218}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Net5Console", "Net5Console\Net5Console.csproj", "{87A7971D-C78A-4B3C-9A34-E86A7B8500EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +71,10 @@ Global
 		{1AA9F374-405C-48A0-885D-BF92DD604218}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AA9F374-405C-48A0-885D-BF92DD604218}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AA9F374-405C-48A0-885D-BF92DD604218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87A7971D-C78A-4B3C-9A34-E86A7B8500EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87A7971D-C78A-4B3C-9A34-E86A7B8500EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87A7971D-C78A-4B3C-9A34-E86A7B8500EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87A7971D-C78A-4B3C-9A34-E86A7B8500EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
