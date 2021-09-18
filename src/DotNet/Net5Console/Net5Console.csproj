@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <OpenApiReference Include="OpenAPIs\swagger.json" CodeGenerator="NSwagCSharp" Namespace="Weather" ClassName="WeatherApiClient">
+    <OpenApiReference Include="OpenAPIs\swagger.json" CodeGenerator="NSwagCSharp" Namespace="WeatherSdk" ClassName="WeatherApiClient">
       <SourceUri>http://localhost:5000/swagger/v1/swagger.json</SourceUri>
     </OpenApiReference>
   </ItemGroup>
@@ -16,6 +16,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
     <PackageReference Include="NSwag.ApiDescription.Client" Version="13.0.5">
       <PrivateAssets>all</PrivateAssets>
