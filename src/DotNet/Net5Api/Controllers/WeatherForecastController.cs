@@ -26,6 +26,8 @@ namespace Net5Api.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
+            var headers = HttpContext.Request.Headers;
+            var user = HttpContext.User;
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
