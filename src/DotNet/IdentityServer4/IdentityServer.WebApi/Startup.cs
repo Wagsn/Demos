@@ -67,9 +67,9 @@ namespace IdentityServer.WebApi
                     // base-address of your identityserver
                     options.Authority = "https://localhost:44370";
 
-                    // if you are using API resources, you can specify the name here
+                    // if you are using API resources, you can specify the name here, ApiResource°üº¬µÄApiScope
                     options.TokenValidationParameters.ValidateAudience = false;
-                    //options.Audience = "weatherApi";
+                    options.TokenValidationParameters.ValidAudience = "weatherApi"; //options.Audience = "weatherApi";
 
                     options.TokenValidationParameters.ValidateIssuer = false;
                     //options.TokenValidationParameters.ValidIssuer = "https://localhost:44370";

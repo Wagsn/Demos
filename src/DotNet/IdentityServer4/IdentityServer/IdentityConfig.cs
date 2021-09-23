@@ -160,7 +160,8 @@ namespace IdentityServer
             };
 
         /// <summary>
-        /// API资源
+        /// API资源 名称将会包含在accesstoken的aud声明中
+        /// aud用于webapi来验证自己定义的Audience
         /// </summary>
         public static IEnumerable<ApiResource> ApiResources { get; set; } =
             new[]
