@@ -1,27 +1,15 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.IO;
+﻿using System;
 
-namespace Net5Console
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            // 1
-            var url = "http://localhost:5000";
-            var client = new System.Net.Http.HttpClient();
-            var list = new WeatherSdk.WeatherApiClient(url, client).WeatherForecastAsync().Result;
-            Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(list));
+// 1
+var url = "http://localhost:5000";
+var client = new System.Net.Http.HttpClient();
+var list = await new WeatherSdk.WeatherApiClient(url, client).WeatherForecastAsync();
+Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(list));
 
-            // 2
-            var apiClient = new WeatherSdk.WeatherApiClient();
-            var data = apiClient.WeatherForecastAsync().Result;
-            Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(data));
-        }
-    }
-
-}
+// 2
+var apiClient = new WeatherSdk.WeatherApiClient();
+var data = await apiClient.WeatherForecastAsync();
+Console.WriteLine(System.Text.Json.JsonSerializer.Serialize(data));
 
 namespace WeatherSdk
 {
