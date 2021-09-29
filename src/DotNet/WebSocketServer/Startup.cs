@@ -10,9 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Hangfire;
 
-namespace HangfireServer
+namespace WebSocketServer
 {
     public class Startup
     {
@@ -29,14 +28,8 @@ namespace HangfireServer
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HangfireServer", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebSocketServer", Version = "v1" });
             });
-
-            services.AddHangfire(config =>
-            {
-                config.UseSqlServerStorage(Configuration.GetConnectionString("DefaultConnection"));
-            });
-            services.AddHangfireServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,19 +39,29 @@ namespace HangfireServer
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HangfireServer v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebSocketServer v1"));
             }
+
+            // index.html
+            app.UseDefaultFiles();
+            // wwwroot
+            app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthorization();
 
+            // WebSocket
+            var webSocketOptions = new WebSocketOptions()
+            {
+                KeepAliveInterval = TimeSpan.FromSeconds(120),
+            };
+            app.UseWebSockets(webSocketOptions);
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-            app.UseHangfireDashboard();
         }
     }
 }
