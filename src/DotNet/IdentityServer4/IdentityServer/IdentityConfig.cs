@@ -62,6 +62,7 @@ namespace IdentityServer
                         // 混合模式 implicit和authorization code的混合
                         // GrantType.Hybrid,
                     },
+                    // where to redirect to after login
                     RedirectUris = new List<string> 
                     {
                         // For MvcClient
@@ -69,6 +70,8 @@ namespace IdentityServer
                         // For ConsoleClient
                         "http://127.0.0.1:45656"
                     },
+                    // where to redirect to after logout
+                    PostLogoutRedirectUris = { "http://localhost:44308/signout-callback-oidc" },
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
