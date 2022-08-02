@@ -29,10 +29,6 @@ namespace IdentityServer
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication()
-                .AddQQ(options =>
-                {
-
-                })
                 // Unicorn.AspNetCore.Authentication.QQ
                 /*.AddQQ("", options=>
                 {
