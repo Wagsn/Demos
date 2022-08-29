@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" DoublePass="true" ReportInfo.Created="12/31/2020 10:58:42" ReportInfo.Modified="04/28/2021 13:28:35" ReportInfo.CreatorVersion="2021.1.0.0">
+  <Dictionary>
+    <TableDataSource Name="明细" ReferenceName="Data.明细" DataType="System.Int32" Enabled="true">
+      <Column Name="商品名" DataType="System.String"/>
+      <Column Name="单价" DataType="System.Decimal"/>
+      <Column Name="数量" DataType="System.Decimal"/>
+    </TableDataSource>
+    <Parameter Name="客户名" DataType="System.String"/>
+    <Parameter Name="电话号码" DataType="System.String"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" LeftMargin="1" RightMargin="1" FirstPageSource="1" OtherPagesSource="1" Watermark.Font="微软雅黑, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="786.24" Height="103.95">
+      <TextObject Name="Text1" Left="37.8" Top="9.45" Width="699.3" Height="28.35" Text="单据" HorzAlign="Center" VertAlign="Center" Font="微软雅黑, 16pt"/>
+      <TextObject Name="Text2" Left="37.8" Top="37.8" Width="699.3" Height="18.9" Text="宠主信息：[客户名]" VertAlign="Center" Font="宋体, 9pt, style=Bold"/>
+      <TextObject Name="Text3" Left="37.8" Top="56.7" Width="75.6" Height="18.9" Text="电话号码：" VertAlign="Center" Font="宋体, 9pt"/>
+      <TextObject Name="Text4" Left="122.85" Top="56.7" Width="236.25" Height="18.9" Text="[电话号码]" VertAlign="Center" Underlines="true" Font="宋体, 9pt"/>
+    </ReportTitleBand>
+    <DataBand Name="Data1" Width="756" Height="336.42">
+      <TableObject Name="Table1" Left="18.9" Top="56.7" Width="667.17" Height="196.56" Border.Lines="All">
+        <TableColumn Name="Column1" Width="126.63"/>
+        <TableColumn Name="Column2" Width="230.58"/>
+        <TableColumn Name="Column3" Width="79.38"/>
+        <TableColumn Name="Column4" Width="126.63"/>
+        <TableColumn Name="Column5" Width="230.58"/>
+        <TableColumn Name="Column6" Width="79.38"/>
+        <TableRow Name="Row1" Height="37.26">
+          <TableCell Name="Cell1" Border.Lines="All" Text="商品名" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+          <TableCell Name="Cell2" Border.Lines="All" Text="[明细.商品名]" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+          <TableCell Name="Cell3" Border.Lines="All" Text="单价" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+          <TableCell Name="Cell5" Border.Lines="All" Text="[明细.单价]" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+          <TableCell Name="Cell3" Border.Lines="All" Text="数量" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+          <TableCell Name="Cell5" Border.Lines="All" Text="[明细.数量]" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+        </TableRow>
+        <TableRow Name="Row2" Height="37.26">
+          <TableCell Name="Cell1" Border.Lines="All" Text="商品名" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+          <TableCell Name="Cell2" Border.Lines="All" Text="[明细.商品名]" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+          <TableCell Name="Cell3" Border.Lines="All" Text="单价" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+          <TableCell Name="Cell5" Border.Lines="All" Text="[明细.单价]" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+          <TableCell Name="Cell3" Border.Lines="All" Text="数量" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+          <TableCell Name="Cell5" Border.Lines="All" Text="[明细.数量]" HorzAlign="Center" VertAlign="Center" Font="宋体, 11pt"/>
+        </TableRow>
+      </TableObject>
+    </DataBand>
+  </ReportPage>
+</Report>
