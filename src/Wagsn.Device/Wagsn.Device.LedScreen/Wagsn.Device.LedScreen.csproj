@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net45</TargetFrameworks>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="bx_sdk_dual\**" />
+    <Compile Remove="EQ2008\**" />
+    <Compile Remove="Lv_Led\**" />
+    <Compile Remove="参考代码\**" />
+    <EmbeddedResource Remove="bx_sdk_dual\**" />
+    <EmbeddedResource Remove="EQ2008\**" />
+    <EmbeddedResource Remove="Lv_Led\**" />
+    <EmbeddedResource Remove="参考代码\**" />
+    <None Remove="bx_sdk_dual\**" />
+    <None Remove="EQ2008\**" />
+    <None Remove="Lv_Led\**" />
+    <None Remove="参考代码\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="EQ2008_Dll.cs" />
+    <Compile Remove="Lv_led.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="EQ2008_Dll.dll" />
+    <None Remove="EQ2008_Dll_Set.ini" />
+    <None Remove="lv_led.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IntelligentHardware.Domain\IntelligentHardware.Domain.csproj" />
+    <ProjectReference Include="..\Wagsn.Device.Core\Wagsn.Device.Core.csproj" />
+  </ItemGroup>
+
+</Project>
