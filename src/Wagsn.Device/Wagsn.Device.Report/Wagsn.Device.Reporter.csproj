@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net45</TargetFrameworks>
@@ -19,7 +19,7 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net5.0-windows'">
     <PackageReference Include="PdfiumPrinter" Version="1.2.1" />
     <PackageReference Include="System.Data.SqlClient">
-      <Version>4.8.3</Version>
+      <Version>4.8.5</Version>
     </PackageReference>
     <PackageReference Include="System.Windows.Extensions">
       <Version>6.0.0</Version>
